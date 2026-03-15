@@ -59,7 +59,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
     const option = {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     };
     const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
       user._id
